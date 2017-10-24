@@ -7,17 +7,17 @@
 int smallDelay=1;
 int extraTime=0;
 
+// Initialize IO Ports
 void PortInit(void){
-	DDRB = 0x0D;
-	PORTB = 0x0D;
-	DDRB = 1<<PORTB1 | 1<< PORTB2 | 1<<PORTB3;
-	PORTB = 1<<PORTB1 | 1<< PORTB2 | 1<<PORTB3;
+	DDRB = 1<<PORTB1 | 1<< PORTB2 | 1<<PORTB3; // Set PB1, PB2, PB3 as Outputs
+	PORTB = 1<<PORTB1 | 1<< PORTB2 | 1<<PORTB3; // Initialize PB1, PB2, PB3 to high
 	_delay_ms(1500);
-	PORTD = 0x04;
-	EIMSK = (1<<INT0);
+	PORTD = 0x04; // Set PD3 as high for pull up resistor
+	EIMSK = (1<<INT0); // Enable Int0
 	EICRA = 0<<ISC01 | 0<<ISC00;	// Trigger INT0 on Low
 }
 
+// Initialize watchdog timer
 void WDT_Init(void){
 	// Clear the reset flag, the WDRF bit (bit 3) of MCUSR.
 	MCUSR = MCUSR & 0xF7;
@@ -45,49 +45,51 @@ void TimerCounterInit(void){
 	TCCR0B = 1<<CS02 | 1<<CS00;  // CLKio /1024 (prescaler)
 }
 
+// Blink an LED connected at PB1 for 50ms if smallDelay==1 or 200ms if not.
+void BlinkLed(void){
+	PORTB = (1<<PORTB1); // Turn LED on
+	if(smallDelay==1)
+		_delay_ms(50);
+	else
+		_delay_ms(200);
+	PORTB = (0<<PORTB1); // Turn LED off
+	if(smallDelay==1)
+		_delay_ms(50);
+	else
+		_delay_ms(200);
+}
+
 int main(void){
 	PortInit();
 	WDT_Init();
 	TimerCounterInit();
-	sei();
-    while (1){
-		PORTB = (1<<PORTB1);
-		if(smallDelay==1)
-			_delay_ms(50);
-		else
-			_delay_ms(200);
-		PORTB = (0<<PORTB1);
-		if(smallDelay==1)
-			_delay_ms(50);
-		else
-			_delay_ms(200);
+	sei(); // Enable Interrupts
+  while (1){
+		BlinkLed();
 	}
 }
 
+// Interrupt Service Routine for INT0
+// When button on INT0 is pressed it toggles the smallDelay
+// and resets the watchdog timer
 ISR(INT0_vect){
 	if(smallDelay==1)
 	smallDelay=0;
 	else
 	smallDelay=1;
-	cli();
-	wdt_reset();
-	_delay_ms(500);
-	sei();
+	// Debounce
+	cli(); // Close Interrupts
+	wdt_reset(); // Reset watchdog timers
+	_delay_ms(500); // Wait 500ms
+	sei(); // Enable Interrupts
 }
 
+// Interrupt Service Routine for Timer Counter
+// Blinks a LED on PB3 every 100 counts;
 ISR(TIMER0_COMPA_vect){
 	 extraTime++;
-	 
-	 if(extraTime > 100)
-	 {
+	 if(extraTime > 100){
 		 extraTime = 0;
 		 PORTB ^= (1 << PORTB3);
 	 }
 }
-
-//ISR(WDT_vect){
-	//PORTB = 1<<PORTB2;
-	//_delay_ms(100);
-	//PORTB = 0<<PORTB2;
-//}
-

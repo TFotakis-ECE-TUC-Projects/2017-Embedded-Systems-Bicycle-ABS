@@ -12,9 +12,9 @@
     <OutputFileName>$(MSBuildProjectName)</OutputFileName>
     <OutputFileExtension>.elf</OutputFileExtension>
     <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
-    <AssemblyName>BlinkingTest2</AssemblyName>
+    <AssemblyName>Milestone1</AssemblyName>
     <Name>BlinkingTest2</Name>
-    <RootNamespace>BlinkingTest2</RootNamespace>
+    <RootNamespace>Milestone1</RootNamespace>
     <ToolchainFlavour>Native</ToolchainFlavour>
     <KeepTimersRunning>true</KeepTimersRunning>
     <OverrideVtor>false</OverrideVtor>
