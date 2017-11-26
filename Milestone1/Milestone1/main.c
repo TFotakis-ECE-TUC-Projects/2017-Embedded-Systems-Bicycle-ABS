@@ -1,3 +1,19 @@
+/*
+	Authors: Kritharakis Emmanuel, Fotakis Tzanis
+	Created on: 12 October 2017
+	AVR: Atmel ATMega328P
+	Created with: Atmel Studio 7
+
+	The code below uses PB1, PB2, PB3 as outputs to turn the connected to them LEDs.
+	More specifically, it blinks the LED connected to PB1 with different delays
+	(50ms or 200ms) depending on which one is selected. The selected delay can be toggled
+	by initiating an interrupt on INT0 (PD2) via a connected pullup push button. 
+	In addition, it toggles the LED connected to PB3 every 100 matches of the compare 
+	register OCR0A with the Timer/Counter0. Lastly, it sets the Watchdog Timer to reset
+	the execution every 8 seconds after the last time the INT0 push button is pushed (the push
+	button resets the Watchdog Timer so as the latter does not reset the execution).
+*/
+
 #define F_CPU 16000000L
 #include <avr/io.h>
 #include <util/delay.h>
@@ -14,7 +30,7 @@ void PortInit(void){
 	_delay_ms(1500);
 	PORTD = 0x04; // Set PD3 as high for pull up resistor
 	EIMSK = (1<<INT0); // Enable Int0
-	EICRA = 0<<ISC01 | 0<<ISC00;	// Trigger INT0 on Low
+	EICRA = 0<<ISC01 | 0<<ISC00; // Trigger INT0 on Low
 }
 
 // Initialize watchdog timer
@@ -59,16 +75,6 @@ void BlinkLed(void){
 		_delay_ms(200);
 }
 
-int main(void){
-	PortInit();
-	WDT_Init();
-	TimerCounterInit();
-	sei(); // Enable Interrupts
-  while (1){
-		BlinkLed();
-	}
-}
-
 // Interrupt Service Routine for INT0
 // When button on INT0 is pressed it toggles the smallDelay
 // and resets the watchdog timer
@@ -87,9 +93,19 @@ ISR(INT0_vect){
 // Interrupt Service Routine for Timer Counter
 // Blinks a LED on PB3 every 100 counts;
 ISR(TIMER0_COMPA_vect){
-	 extraTime++;
-	 if(extraTime > 100){
-		 extraTime = 0;
-		 PORTB ^= (1 << PORTB3);
-	 }
+	extraTime++;
+	if(extraTime > 100){
+		extraTime = 0;
+		PORTB ^= (1 << PORTB3);
+	}
+}
+
+int main(void){
+	PortInit();
+	WDT_Init();
+	TimerCounterInit();
+	sei(); // Enable Interrupts
+  	while (1){
+		BlinkLed();
+	}
 }
