@@ -1,18 +1,20 @@
 /*
-	Authors: Kritharakis Emmanuel, Fotakis Tzanis
-	Created on: 10 November 2017
-	AVR: Atmel ATMega328P
-	Created with: Atmel Studio 7
-
-	The code below uses PB1, PB2 and PD6 as PWM outputs using OCR1A, OCR1B and
-	OCR0A compare registers respectively. Also, it uses ADC0 (PC0) as input signal
-	from a potentiometer. It reads the potentiometer's position and controls each PWM's
-	duty cycle. More specifically, it linearly sets the PB1's (servo) and PD6's (LED) PWM duty 
-	cycle to minimum and PB2's (servo) PWM duty cycle to maximum when the potentiometer
-	is at minimum position and the exact reverse when the potentiometer is at 
-	maximum position. The whole functionality is interrupt driven, using the 
-	ADC's "Conversion Completed" Interrupt.
-*/
+ *	Milestone3.c
+ *	
+ *	Authors: Kritharakis Emmanuel, Fotakis Tzanis
+ *	Created on: 10 November 2017
+ *	AVR: Atmel ATMega328P
+ *	Created with: Atmel Studio 7
+ *
+ *	The code below uses PB1, PB2 and PD6 as PWM outputs using OCR1A, OCR1B and
+ *	OCR0A compare registers respectively. Also, it uses ADC0 (PC0) as input signal
+ *	from a potentiometer. It reads the potentiometer's position and controls each PWM's
+ *	duty cycle. More specifically, it linearly sets the PB1's (servo) and PD6's (LED) PWM duty 
+ *	cycle to minimum and PB2's (servo) PWM duty cycle to maximum when the potentiometer
+ *	is at minimum position and the exact reverse when the potentiometer is at 
+ *	maximum position. The whole functionality is interrupt driven, using the 
+ *	ADC's "Conversion Completed" Interrupt.
+ */
 
 #define F_CPU 16000000 //16MHz
 #include <avr/io.h>
