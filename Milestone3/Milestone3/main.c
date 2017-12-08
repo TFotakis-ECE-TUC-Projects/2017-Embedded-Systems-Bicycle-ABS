@@ -21,9 +21,11 @@
 #include <util/delay.h>
 #include <avr/interrupt.h>
 
-volatile uint32_t micros=0;
-uint32_t delay=200000;
-uint32_t start=0;
+volatile uint32_t microsFrontWheel=0;
+volatile uint32_t microsRearWheel=0;
+uint32_t delay=100000;
+uint32_t startFrontWheel=0;
+uint32_t startRearWheel=0;
 
 // Initializes PWM signal on PD6 for the LED with no prescaling
 void LEDPWMinit(){
@@ -39,11 +41,12 @@ void MicrosTimerInit(){
 	//TCCR2A = 1<<COM2A1; // Non-Inverting Mode - Clear OC2A on compare match, set OC2A at BOTTOM
 	TCCR2B = 1 << CS21; // Set prescaler to clk/8
 	TIMSK2 = (1 << OCIE2A); // Enable CTC interrupt
-	OCR2A = 1; // Set TOP value to 2
+	OCR2A = 20; // Set TOP value to 20
 }
 
 ISR(TIMER2_COMPA_vect){
-	micros++;
+	microsFrontWheel++;
+	microsRearWheel++;
 }
 
 // Initializes PWM signal on PB1 & PB2 for front servo & back servo
@@ -84,31 +87,39 @@ void ADCinit(){
 
 void Blink(){
 	PORTC |= 1<<PORTC5;
-	for(uint32_t i=0; i<delay;i++){
-		_delay_us(1);
-		//_delay_loop_2(4);
-	}
+	for(uint32_t i=0; i<delay;i++)
+		_delay_us(10);
 	PORTC = 0;
-	for(uint32_t i=0; i<delay;i++){
-		_delay_us(1);
-		//_delay_loop_2(4);
+	for(uint32_t i=0; i<delay;i++)
+		_delay_us(10);
+}
+
+ISR(INT0_vect){
+	if(PIND & (1<<PORTD2)){
+		startFrontWheel = microsFrontWheel;
+	}else{
+		delay = microsFrontWheel-startFrontWheel;
+		microsFrontWheel=0;
 	}
 }
 
-ISR(PCINT2_vect){
-	//PORTC^=1<<PORTC5;
-	if(PIND & (1<<PORTD2)){
-		start = micros;
+ISR(INT1_vect){
+	if(PIND & (1<<PORTD3)){
+		startRearWheel = microsRearWheel;
 	}else{
-		delay = micros-start;
-		micros=0;
+		delay = microsRearWheel-startRearWheel;
+		microsRearWheel=0;
 	}
+}
+
+void PhotointerruptersInit(){
+	EIMSK = 1<<INT1 | 1<<INT0; // Enable INT0 and INT1
+	EICRA = 0<<ISC11 | 1<<ISC10 | 0<<ISC01 | 1<<ISC00; // Trigger INT0 and INT1 on Change
 }
 
 int main(void){
 	DDRC |= 1<<PORTC5; // Set PC5 as Output
-	PCICR = 1<<PCIE2;
-	PCMSK2 = 1<<PCINT18;
+	PhotointerruptersInit();
 	MicrosTimerInit();
 	sei();
 	while(1){
