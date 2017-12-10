@@ -24,15 +24,6 @@
 
 // ------------------------------------------ Calibration ------------------------------------------------
 #define F_CPU 16000000UL	// 16 MHz Clock Frequency
-#define frontWheelServoPort PORTB1
-#define rearWheelServoPort PORTB2
-
-#define frontServoMaxPosition 256
-#define frontServoMinPosition 310
-#define rearServoMaxPosition 256
-#define rearServoMinPosition 310
-
-#define wheelsPeriodDifferenceThreshold 0
 // -------------------------------------------------------------------------------------------------------
 
 #include <avr/io.h>
@@ -73,9 +64,13 @@ void PhotoInterruptersInit(){
 	EICRA = 0<<ISC11 | 1<<ISC10 | 0<<ISC01 | 1<<ISC00; // Trigger INT0 and INT1 on Change
 }
 
-// Initializes PWM signal on PB1 & PB2 for front servo & back servo
+// Initializes PWM signal on PB1 & PB2 for front & back servo respectively
 void ServoPWMinit(){
-	DDRB = 1<<DDB1 | 1<<DDB2; // Set PB1 & PB2 as outputs
+	DDRB = 1<<DDB1 | 1<<DDB2; // Set PB1 & PB2 as outputs for OC1A and OC1B respectively
+	TCCR1A|=1<<COM1A1 | 1<<COM1B1 | 1<<WGM11; //Non-Inverting mode - Set OC1A/OC1B on compare match when up-counting. Clear OC1A/OC1B on compare match when down counting.
+	TCCR1B|=1<<WGM13 | 1<<WGM12; // Fast PWM
+	TCCR1B|=1<<CS11; // Set prescaler to clk/8
+	ICR1=40000;	//fPWM=50Hz (Period = 20ms Standard).
 }
 
 int lastRetVal=0;
@@ -85,48 +80,26 @@ int checkWheelsFrequencies(){
 	frontWheelPeriod=-1;
 	rearWheelPeriod=-1;
 	int retVal = 0;
-	if(difference>wheelsPeriodDifferenceThreshold) retVal = 1;
-	else if (difference<-wheelsPeriodDifferenceThreshold) retVal = -1;
+	if(difference>0) retVal = 1;
+	else if (difference<0) retVal = -1;
 	lastRetVal=retVal;
 	return retVal;
-}
-
-// Sets the TOP register's value
-// MinValue=0, MaxValue=235
-void setPWM(int value, int port){
-	if(value>235) value=235;
-	else if(value<0) value=0;
-	PORTB = 1<<port;
-	_delay_us(500); // Min 500 - Max 2380
-	for(int i=0; i<value;i++) _delay_us(8);
-	PORTB = 0;
 }
 
 // Todo: Add comments
 void setServoPosition(int value){
 	int checkWheelsFrequenciesValue = checkWheelsFrequencies();
-	uint8_t tmpValue=value;
-	//tmpValue = tmpValue>127?127:tmpValue;
-	tmpValue = checkWheelsFrequenciesValue == 1?0:tmpValue;
-	setPWM(tmpValue, frontWheelServoPort);
-			
-	tmpValue=value;
-	//tmpValue*=2;
-	//tmpValue = tmpValue>250?250:tmpValue;
-	tmpValue = checkWheelsFrequenciesValue == -1?0:tmpValue;
-	setPWM(tmpValue, rearWheelServoPort);
+	if(value>235) value=235;
+	else if(value<0) value=0;
+	OCR1A = 1000 + (checkWheelsFrequenciesValue == 1 ? 0 : value<<4);
+	OCR1B = 1000 + (checkWheelsFrequenciesValue == -1 ? 0 : value<<4);
 }
 
-// Sets the PWM duty cycle to the value of the ADC0, when every conversion finishes
+// Sets the Servo PWM duty cycle to the value of the ADC0, when every conversion finishes
 ISR (ADC_vect){
-	//if (lastSliderPosition==ADCH) return;
-	//setServoPosition(256-ADCH);
-	//setServoPosition(256);
-	//for(int i=0; i<value;i++) _delay_us(8);
 	// 256-ADCH-128
-	int value = 128 - ADCH;
+	int value = 128 - ADCH; // Slider value inversion and offsetting
 	setServoPosition(value);
-	//lastSliderPosition=ADCH;
 }
 
 // Todo: Add comments
