@@ -3,44 +3,44 @@ Milestone3.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000004  00800100  00000398  0000042c  2**0
+  0 .data         00000008  00800100  0000045a  000004ee  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         00000398  00000000  00000000  00000094  2**1
+  1 .text         0000045a  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000012  00800104  00800104  00000430  2**0
+  2 .bss          00000012  00800108  00800108  000004f6  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  00000430  2**0
+  3 .comment      00000030  00000000  00000000  000004f6  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000460  2**2
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000528  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 00000078  00000000  00000000  000004a0  2**0
+  5 .debug_aranges 00000078  00000000  00000000  00000568  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00000a55  00000000  00000000  00000518  2**0
+  6 .debug_info   00000a16  00000000  00000000  000005e0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 000007c4  00000000  00000000  00000f6d  2**0
+  7 .debug_abbrev 0000079e  00000000  00000000  00000ff6  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00000479  00000000  00000000  00001731  2**0
+  8 .debug_line   00000492  00000000  00000000  00001794  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  000001b8  00000000  00000000  00001bac  2**2
+  9 .debug_frame  000001b8  00000000  00000000  00001c28  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    0000047c  00000000  00000000  00001d64  2**0
+ 10 .debug_str    000004e9  00000000  00000000  00001de0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    000004ad  00000000  00000000  000021e0  2**0
+ 11 .debug_loc    000004b0  00000000  00000000  000022c9  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000068  00000000  00000000  0000268d  2**0
+ 12 .debug_ranges 00000068  00000000  00000000  00002779  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
 
 00000000 <__vectors>:
    0:	0c 94 34 00 	jmp	0x68	; 0x68 <__ctors_end>
-   4:	0c 94 1e 01 	jmp	0x23c	; 0x23c <__vector_1>
-   8:	0c 94 6f 01 	jmp	0x2de	; 0x2de <__vector_2>
+   4:	0c 94 7f 01 	jmp	0x2fe	; 0x2fe <__vector_1>
+   8:	0c 94 d0 01 	jmp	0x3a0	; 0x3a0 <__vector_2>
    c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
   10:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
   14:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
   18:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
-  1c:	0c 94 a2 00 	jmp	0x144	; 0x144 <__vector_7>
+  1c:	0c 94 47 01 	jmp	0x28e	; 0x28e <__vector_7>
   20:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
   24:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
   28:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
@@ -54,7 +54,7 @@ Disassembly of section .text:
   48:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
   4c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
   50:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
-  54:	0c 94 da 00 	jmp	0x1b4	; 0x1b4 <__vector_21>
+  54:	0c 94 1b 01 	jmp	0x236	; 0x236 <__vector_21>
   58:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
   5c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
   60:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
@@ -72,18 +72,18 @@ Disassembly of section .text:
   74:	11 e0       	ldi	r17, 0x01	; 1
   76:	a0 e0       	ldi	r26, 0x00	; 0
   78:	b1 e0       	ldi	r27, 0x01	; 1
-  7a:	e8 e9       	ldi	r30, 0x98	; 152
-  7c:	f3 e0       	ldi	r31, 0x03	; 3
+  7a:	ea e5       	ldi	r30, 0x5A	; 90
+  7c:	f4 e0       	ldi	r31, 0x04	; 4
   7e:	02 c0       	rjmp	.+4      	; 0x84 <__do_copy_data+0x10>
   80:	05 90       	lpm	r0, Z+
   82:	0d 92       	st	X+, r0
-  84:	a4 30       	cpi	r26, 0x04	; 4
+  84:	a8 30       	cpi	r26, 0x08	; 8
   86:	b1 07       	cpc	r27, r17
   88:	d9 f7       	brne	.-10     	; 0x80 <__do_copy_data+0xc>
 
 0000008a <__do_clear_bss>:
   8a:	21 e0       	ldi	r18, 0x01	; 1
-  8c:	a4 e0       	ldi	r26, 0x04	; 4
+  8c:	a8 e0       	ldi	r26, 0x08	; 8
   8e:	b1 e0       	ldi	r27, 0x01	; 1
   90:	01 c0       	rjmp	.+2      	; 0x94 <.do_clear_bss_start>
 
@@ -91,22 +91,22 @@ Disassembly of section .text:
   92:	1d 92       	st	X+, r1
 
 00000094 <.do_clear_bss_start>:
-  94:	a6 31       	cpi	r26, 0x16	; 22
+  94:	aa 31       	cpi	r26, 0x1A	; 26
   96:	b2 07       	cpc	r27, r18
   98:	e1 f7       	brne	.-8      	; 0x92 <.do_clear_bss_loop>
-  9a:	0e 94 c0 01 	call	0x380	; 0x380 <main>
-  9e:	0c 94 ca 01 	jmp	0x394	; 0x394 <_exit>
+  9a:	0e 94 21 02 	call	0x442	; 0x442 <main>
+  9e:	0c 94 2b 02 	jmp	0x456	; 0x456 <_exit>
 
 000000a2 <__bad_interrupt>:
   a2:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
 000000a6 <ADCinit>:
-void Blink(){
-	PORTC |= 1<<PORTC5;
-	for(uint32_t i=0; i<delay;i++)
-	_delay_us(10);
-	PORTC = 0;
-	for(uint32_t i=0; i<delay;i++)
+	EICRA = 0<<ISC11 | 1<<ISC10 | 0<<ISC01 | 1<<ISC00; // Trigger INT0 and INT1 on Change
+}
+
+// Initializes PWM signal on PB1 & PB2 for front servo & back servo
+void ServoPWMinit(){
+	DDRB = 1<<DDB1 | 1<<DDB2; // Set PB1 & PB2 as outputs
   a6:	ec e7       	ldi	r30, 0x7C	; 124
   a8:	f0 e0       	ldi	r31, 0x00	; 0
   aa:	80 e4       	ldi	r24, 0x40	; 64
@@ -141,336 +141,489 @@ void Blink(){
   e6:	80 93 b3 00 	sts	0x00B3, r24	; 0x8000b3 <__TEXT_REGION_LENGTH__+0x7e00b3>
   ea:	08 95       	ret
 
-000000ec <PhotointerruptersInit>:
+000000ec <PhotoInterruptersInit>:
   ec:	83 e0       	ldi	r24, 0x03	; 3
   ee:	8d bb       	out	0x1d, r24	; 29
   f0:	85 e0       	ldi	r24, 0x05	; 5
   f2:	80 93 69 00 	sts	0x0069, r24	; 0x800069 <__TEXT_REGION_LENGTH__+0x7e0069>
   f6:	08 95       	ret
 
-000000f8 <setServoPosition>:
-  f8:	61 15       	cp	r22, r1
-  fa:	71 05       	cpc	r23, r1
-  fc:	21 f0       	breq	.+8      	; 0x106 <setServoPosition+0xe>
-  fe:	61 30       	cpi	r22, 0x01	; 1
- 100:	71 05       	cpc	r23, r1
- 102:	21 f0       	breq	.+8      	; 0x10c <setServoPosition+0x14>
- 104:	05 c0       	rjmp	.+10     	; 0x110 <setServoPosition+0x18>
- 106:	22 e0       	ldi	r18, 0x02	; 2
- 108:	25 b9       	out	0x05, r18	; 5
- 10a:	02 c0       	rjmp	.+4      	; 0x110 <setServoPosition+0x18>
- 10c:	24 e0       	ldi	r18, 0x04	; 4
- 10e:	25 b9       	out	0x05, r18	; 5
- 110:	e7 ed       	ldi	r30, 0xD7	; 215
- 112:	f4 e0       	ldi	r31, 0x04	; 4
- 114:	31 97       	sbiw	r30, 0x01	; 1
- 116:	f1 f7       	brne	.-4      	; 0x114 <setServoPosition+0x1c>
- 118:	00 c0       	rjmp	.+0      	; 0x11a <setServoPosition+0x22>
- 11a:	00 00       	nop
- 11c:	18 16       	cp	r1, r24
- 11e:	19 06       	cpc	r1, r25
- 120:	5c f4       	brge	.+22     	; 0x138 <setServoPosition+0x40>
- 122:	20 e0       	ldi	r18, 0x00	; 0
- 124:	30 e0       	ldi	r19, 0x00	; 0
- 126:	f5 e1       	ldi	r31, 0x15	; 21
- 128:	fa 95       	dec	r31
- 12a:	f1 f7       	brne	.-4      	; 0x128 <setServoPosition+0x30>
- 12c:	00 00       	nop
- 12e:	2f 5f       	subi	r18, 0xFF	; 255
- 130:	3f 4f       	sbci	r19, 0xFF	; 255
- 132:	82 17       	cp	r24, r18
- 134:	93 07       	cpc	r25, r19
- 136:	b9 f7       	brne	.-18     	; 0x126 <setServoPosition+0x2e>
- 138:	15 b8       	out	0x05, r1	; 5
- 13a:	45 e1       	ldi	r20, 0x15	; 21
- 13c:	4a 95       	dec	r20
- 13e:	f1 f7       	brne	.-4      	; 0x13c <setServoPosition+0x44>
- 140:	00 00       	nop
- 142:	08 95       	ret
-
-00000144 <__vector_7>:
- 144:	1f 92       	push	r1
- 146:	0f 92       	push	r0
- 148:	0f b6       	in	r0, 0x3f	; 63
- 14a:	0f 92       	push	r0
- 14c:	11 24       	eor	r1, r1
- 14e:	8f 93       	push	r24
- 150:	9f 93       	push	r25
- 152:	af 93       	push	r26
- 154:	bf 93       	push	r27
- 156:	80 91 12 01 	lds	r24, 0x0112	; 0x800112 <microsFrontWheel>
- 15a:	90 91 13 01 	lds	r25, 0x0113	; 0x800113 <microsFrontWheel+0x1>
- 15e:	a0 91 14 01 	lds	r26, 0x0114	; 0x800114 <microsFrontWheel+0x2>
- 162:	b0 91 15 01 	lds	r27, 0x0115	; 0x800115 <microsFrontWheel+0x3>
- 166:	01 96       	adiw	r24, 0x01	; 1
- 168:	a1 1d       	adc	r26, r1
- 16a:	b1 1d       	adc	r27, r1
- 16c:	80 93 12 01 	sts	0x0112, r24	; 0x800112 <microsFrontWheel>
- 170:	90 93 13 01 	sts	0x0113, r25	; 0x800113 <microsFrontWheel+0x1>
- 174:	a0 93 14 01 	sts	0x0114, r26	; 0x800114 <microsFrontWheel+0x2>
- 178:	b0 93 15 01 	sts	0x0115, r27	; 0x800115 <microsFrontWheel+0x3>
- 17c:	80 91 0e 01 	lds	r24, 0x010E	; 0x80010e <microsRearWheel>
- 180:	90 91 0f 01 	lds	r25, 0x010F	; 0x80010f <microsRearWheel+0x1>
- 184:	a0 91 10 01 	lds	r26, 0x0110	; 0x800110 <microsRearWheel+0x2>
- 188:	b0 91 11 01 	lds	r27, 0x0111	; 0x800111 <microsRearWheel+0x3>
- 18c:	01 96       	adiw	r24, 0x01	; 1
- 18e:	a1 1d       	adc	r26, r1
- 190:	b1 1d       	adc	r27, r1
- 192:	80 93 0e 01 	sts	0x010E, r24	; 0x80010e <microsRearWheel>
- 196:	90 93 0f 01 	sts	0x010F, r25	; 0x80010f <microsRearWheel+0x1>
- 19a:	a0 93 10 01 	sts	0x0110, r26	; 0x800110 <microsRearWheel+0x2>
- 19e:	b0 93 11 01 	sts	0x0111, r27	; 0x800111 <microsRearWheel+0x3>
- 1a2:	bf 91       	pop	r27
- 1a4:	af 91       	pop	r26
- 1a6:	9f 91       	pop	r25
- 1a8:	8f 91       	pop	r24
- 1aa:	0f 90       	pop	r0
- 1ac:	0f be       	out	0x3f, r0	; 63
- 1ae:	0f 90       	pop	r0
- 1b0:	1f 90       	pop	r1
- 1b2:	18 95       	reti
-
-000001b4 <__vector_21>:
-	_delay_us(10);
+000000f8 <checkWheelsFrequencies>:
 }
+
+int lastRetVal=0;
+int checkWheelsFrequencies(){
+	if (frontWheelPeriod == -1 || rearWheelPeriod == -1) return lastRetVal;
+  f8:	80 91 04 01 	lds	r24, 0x0104	; 0x800104 <frontWheelPeriod>
+  fc:	90 91 05 01 	lds	r25, 0x0105	; 0x800105 <frontWheelPeriod+0x1>
+ 100:	a0 91 06 01 	lds	r26, 0x0106	; 0x800106 <frontWheelPeriod+0x2>
+ 104:	b0 91 07 01 	lds	r27, 0x0107	; 0x800107 <frontWheelPeriod+0x3>
+ 108:	8f 3f       	cpi	r24, 0xFF	; 255
+ 10a:	2f ef       	ldi	r18, 0xFF	; 255
+ 10c:	92 07       	cpc	r25, r18
+ 10e:	a2 07       	cpc	r26, r18
+ 110:	b2 07       	cpc	r27, r18
+ 112:	71 f0       	breq	.+28     	; 0x130 <checkWheelsFrequencies+0x38>
+ 114:	40 91 00 01 	lds	r20, 0x0100	; 0x800100 <__data_start>
+ 118:	50 91 01 01 	lds	r21, 0x0101	; 0x800101 <__data_start+0x1>
+ 11c:	60 91 02 01 	lds	r22, 0x0102	; 0x800102 <__data_start+0x2>
+ 120:	70 91 03 01 	lds	r23, 0x0103	; 0x800103 <__data_start+0x3>
+ 124:	4f 3f       	cpi	r20, 0xFF	; 255
+ 126:	2f ef       	ldi	r18, 0xFF	; 255
+ 128:	52 07       	cpc	r21, r18
+ 12a:	62 07       	cpc	r22, r18
+ 12c:	72 07       	cpc	r23, r18
+ 12e:	29 f4       	brne	.+10     	; 0x13a <checkWheelsFrequencies+0x42>
+ 130:	80 91 08 01 	lds	r24, 0x0108	; 0x800108 <__data_end>
+ 134:	90 91 09 01 	lds	r25, 0x0109	; 0x800109 <__data_end+0x1>
+ 138:	08 95       	ret
+	int32_t difference = frontWheelPeriod-rearWheelPeriod;
+ 13a:	84 1b       	sub	r24, r20
+ 13c:	95 0b       	sbc	r25, r21
+ 13e:	a6 0b       	sbc	r26, r22
+ 140:	b7 0b       	sbc	r27, r23
+	frontWheelPeriod=-1;
+ 142:	4f ef       	ldi	r20, 0xFF	; 255
+ 144:	5f ef       	ldi	r21, 0xFF	; 255
+ 146:	ba 01       	movw	r22, r20
+ 148:	40 93 04 01 	sts	0x0104, r20	; 0x800104 <frontWheelPeriod>
+ 14c:	50 93 05 01 	sts	0x0105, r21	; 0x800105 <frontWheelPeriod+0x1>
+ 150:	60 93 06 01 	sts	0x0106, r22	; 0x800106 <frontWheelPeriod+0x2>
+ 154:	70 93 07 01 	sts	0x0107, r23	; 0x800107 <frontWheelPeriod+0x3>
+	rearWheelPeriod=-1;
+ 158:	40 93 00 01 	sts	0x0100, r20	; 0x800100 <__data_start>
+ 15c:	50 93 01 01 	sts	0x0101, r21	; 0x800101 <__data_start+0x1>
+ 160:	60 93 02 01 	sts	0x0102, r22	; 0x800102 <__data_start+0x2>
+ 164:	70 93 03 01 	sts	0x0103, r23	; 0x800103 <__data_start+0x3>
+	int retVal = 0;
+	if(difference>wheelsPeriodDifferenceThreshold) retVal = 1;
+ 168:	18 16       	cp	r1, r24
+ 16a:	19 06       	cpc	r1, r25
+ 16c:	1a 06       	cpc	r1, r26
+ 16e:	1b 06       	cpc	r1, r27
+ 170:	5c f0       	brlt	.+22     	; 0x188 <checkWheelsFrequencies+0x90>
+	else if (difference<-wheelsPeriodDifferenceThreshold) retVal = -1;
+ 172:	88 27       	eor	r24, r24
+ 174:	b7 fd       	sbrc	r27, 7
+ 176:	83 95       	inc	r24
+ 178:	99 27       	eor	r25, r25
+ 17a:	aa 27       	eor	r26, r26
+ 17c:	bb 27       	eor	r27, r27
+ 17e:	22 27       	eor	r18, r18
+ 180:	33 27       	eor	r19, r19
+ 182:	28 1b       	sub	r18, r24
+ 184:	39 0b       	sbc	r19, r25
+ 186:	02 c0       	rjmp	.+4      	; 0x18c <checkWheelsFrequencies+0x94>
+	if (frontWheelPeriod == -1 || rearWheelPeriod == -1) return lastRetVal;
+	int32_t difference = frontWheelPeriod-rearWheelPeriod;
+	frontWheelPeriod=-1;
+	rearWheelPeriod=-1;
+	int retVal = 0;
+	if(difference>wheelsPeriodDifferenceThreshold) retVal = 1;
+ 188:	21 e0       	ldi	r18, 0x01	; 1
+ 18a:	30 e0       	ldi	r19, 0x00	; 0
+	else if (difference<-wheelsPeriodDifferenceThreshold) retVal = -1;
+	lastRetVal=retVal;
+ 18c:	30 93 09 01 	sts	0x0109, r19	; 0x800109 <__data_end+0x1>
+ 190:	20 93 08 01 	sts	0x0108, r18	; 0x800108 <__data_end>
+	return retVal;
+ 194:	82 2f       	mov	r24, r18
+ 196:	93 2f       	mov	r25, r19
+}
+ 198:	08 95       	ret
+
+0000019a <setPWM>:
+
+// Sets the TOP register's value
+// MinValue=0, MaxValue=235
+void setPWM(int value, int port){
+ 19a:	99 23       	and	r25, r25
+ 19c:	14 f4       	brge	.+4      	; 0x1a2 <setPWM+0x8>
+ 19e:	80 e0       	ldi	r24, 0x00	; 0
+ 1a0:	90 e0       	ldi	r25, 0x00	; 0
+ 1a2:	8c 3e       	cpi	r24, 0xEC	; 236
+ 1a4:	91 05       	cpc	r25, r1
+ 1a6:	14 f0       	brlt	.+4      	; 0x1ac <setPWM+0x12>
+ 1a8:	8b ee       	ldi	r24, 0xEB	; 235
+ 1aa:	90 e0       	ldi	r25, 0x00	; 0
+	if(value>235) value=235;
+	else if(value<0) value=0;
+	PORTB = 1<<port;
+ 1ac:	21 e0       	ldi	r18, 0x01	; 1
+ 1ae:	30 e0       	ldi	r19, 0x00	; 0
+ 1b0:	02 c0       	rjmp	.+4      	; 0x1b6 <setPWM+0x1c>
+ 1b2:	22 0f       	add	r18, r18
+ 1b4:	33 1f       	adc	r19, r19
+ 1b6:	6a 95       	dec	r22
+ 1b8:	e2 f7       	brpl	.-8      	; 0x1b2 <setPWM+0x18>
+ 1ba:	25 b9       	out	0x05, r18	; 5
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 1bc:	ef ec       	ldi	r30, 0xCF	; 207
+ 1be:	f7 e0       	ldi	r31, 0x07	; 7
+ 1c0:	31 97       	sbiw	r30, 0x01	; 1
+ 1c2:	f1 f7       	brne	.-4      	; 0x1c0 <setPWM+0x26>
+ 1c4:	00 c0       	rjmp	.+0      	; 0x1c6 <setPWM+0x2c>
+ 1c6:	00 00       	nop
+	_delay_us(500); // Min 500 - Max 2380
+	for(int i=0; i<value;i++) _delay_us(8);
+ 1c8:	18 16       	cp	r1, r24
+ 1ca:	19 06       	cpc	r1, r25
+ 1cc:	5c f4       	brge	.+22     	; 0x1e4 <setPWM+0x4a>
+ 1ce:	20 e0       	ldi	r18, 0x00	; 0
+ 1d0:	30 e0       	ldi	r19, 0x00	; 0
+ 1d2:	fa e2       	ldi	r31, 0x2A	; 42
+ 1d4:	fa 95       	dec	r31
+ 1d6:	f1 f7       	brne	.-4      	; 0x1d4 <setPWM+0x3a>
+ 1d8:	00 c0       	rjmp	.+0      	; 0x1da <setPWM+0x40>
+ 1da:	2f 5f       	subi	r18, 0xFF	; 255
+ 1dc:	3f 4f       	sbci	r19, 0xFF	; 255
+ 1de:	28 17       	cp	r18, r24
+ 1e0:	39 07       	cpc	r19, r25
+ 1e2:	b9 f7       	brne	.-18     	; 0x1d2 <setPWM+0x38>
+	PORTB = 0;
+ 1e4:	15 b8       	out	0x05, r1	; 5
+ 1e6:	08 95       	ret
+
+000001e8 <setServoPosition>:
+}
+
+// Todo: Add comments
+void setServoPosition(int value){
+ 1e8:	0f 93       	push	r16
+ 1ea:	1f 93       	push	r17
+ 1ec:	cf 93       	push	r28
+ 1ee:	df 93       	push	r29
+ 1f0:	18 2f       	mov	r17, r24
+	int checkWheelsFrequenciesValue = checkWheelsFrequencies();
+ 1f2:	0e 94 7c 00 	call	0xf8	; 0xf8 <checkWheelsFrequencies>
+ 1f6:	ec 01       	movw	r28, r24
+	uint8_t tmpValue=value;
+ 1f8:	01 2f       	mov	r16, r17
+	//tmpValue = tmpValue>127?127:tmpValue;
+	tmpValue = checkWheelsFrequenciesValue == 1?0:tmpValue;
+ 1fa:	01 97       	sbiw	r24, 0x01	; 1
+ 1fc:	81 f0       	breq	.+32     	; 0x21e <setServoPosition+0x36>
+	setPWM(tmpValue, frontWheelServoPort);
+ 1fe:	61 e0       	ldi	r22, 0x01	; 1
+ 200:	70 e0       	ldi	r23, 0x00	; 0
+ 202:	81 2f       	mov	r24, r17
+ 204:	90 e0       	ldi	r25, 0x00	; 0
+ 206:	0e 94 cd 00 	call	0x19a	; 0x19a <setPWM>
+			
+	tmpValue=value;
+	//tmpValue*=2;
+	//tmpValue = tmpValue>250?250:tmpValue;
+	tmpValue = checkWheelsFrequenciesValue == -1?0:tmpValue;
+ 20a:	21 96       	adiw	r28, 0x01	; 1
+ 20c:	09 f4       	brne	.+2      	; 0x210 <setServoPosition+0x28>
+ 20e:	00 e0       	ldi	r16, 0x00	; 0
+	setPWM(tmpValue, rearWheelServoPort);
+ 210:	62 e0       	ldi	r22, 0x02	; 2
+ 212:	70 e0       	ldi	r23, 0x00	; 0
+ 214:	80 2f       	mov	r24, r16
+ 216:	90 e0       	ldi	r25, 0x00	; 0
+ 218:	0e 94 cd 00 	call	0x19a	; 0x19a <setPWM>
+}
+ 21c:	07 c0       	rjmp	.+14     	; 0x22c <setServoPosition+0x44>
+void setServoPosition(int value){
+	int checkWheelsFrequenciesValue = checkWheelsFrequencies();
+	uint8_t tmpValue=value;
+	//tmpValue = tmpValue>127?127:tmpValue;
+	tmpValue = checkWheelsFrequenciesValue == 1?0:tmpValue;
+	setPWM(tmpValue, frontWheelServoPort);
+ 21e:	61 e0       	ldi	r22, 0x01	; 1
+ 220:	70 e0       	ldi	r23, 0x00	; 0
+ 222:	80 e0       	ldi	r24, 0x00	; 0
+ 224:	90 e0       	ldi	r25, 0x00	; 0
+ 226:	0e 94 cd 00 	call	0x19a	; 0x19a <setPWM>
+ 22a:	f2 cf       	rjmp	.-28     	; 0x210 <setServoPosition+0x28>
+	tmpValue=value;
+	//tmpValue*=2;
+	//tmpValue = tmpValue>250?250:tmpValue;
+	tmpValue = checkWheelsFrequenciesValue == -1?0:tmpValue;
+	setPWM(tmpValue, rearWheelServoPort);
+}
+ 22c:	df 91       	pop	r29
+ 22e:	cf 91       	pop	r28
+ 230:	1f 91       	pop	r17
+ 232:	0f 91       	pop	r16
+ 234:	08 95       	ret
+
+00000236 <__vector_21>:
 
 // Sets the PWM duty cycle to the value of the ADC0, when every conversion finishes
 ISR (ADC_vect){
- 1b4:	1f 92       	push	r1
- 1b6:	0f 92       	push	r0
- 1b8:	0f b6       	in	r0, 0x3f	; 63
- 1ba:	0f 92       	push	r0
- 1bc:	11 24       	eor	r1, r1
- 1be:	2f 93       	push	r18
- 1c0:	3f 93       	push	r19
- 1c2:	4f 93       	push	r20
- 1c4:	5f 93       	push	r21
- 1c6:	6f 93       	push	r22
- 1c8:	7f 93       	push	r23
- 1ca:	8f 93       	push	r24
- 1cc:	9f 93       	push	r25
- 1ce:	af 93       	push	r26
- 1d0:	bf 93       	push	r27
- 1d2:	cf 93       	push	r28
- 1d4:	df 93       	push	r29
- 1d6:	ef 93       	push	r30
- 1d8:	ff 93       	push	r31
-	if (lastValue!=ADCH){
- 1da:	80 91 79 00 	lds	r24, 0x0079	; 0x800079 <__TEXT_REGION_LENGTH__+0x7e0079>
- 1de:	90 e0       	ldi	r25, 0x00	; 0
- 1e0:	20 91 04 01 	lds	r18, 0x0104	; 0x800104 <__data_end>
- 1e4:	30 91 05 01 	lds	r19, 0x0105	; 0x800105 <__data_end+0x1>
- 1e8:	82 17       	cp	r24, r18
- 1ea:	93 07       	cpc	r25, r19
- 1ec:	a1 f0       	breq	.+40     	; 0x216 <__vector_21+0x62>
-		setServoPosition(ADCH, 0);
- 1ee:	c9 e7       	ldi	r28, 0x79	; 121
- 1f0:	d0 e0       	ldi	r29, 0x00	; 0
- 1f2:	88 81       	ld	r24, Y
- 1f4:	60 e0       	ldi	r22, 0x00	; 0
- 1f6:	70 e0       	ldi	r23, 0x00	; 0
- 1f8:	90 e0       	ldi	r25, 0x00	; 0
- 1fa:	0e 94 7c 00 	call	0xf8	; 0xf8 <setServoPosition>
-		setServoPosition(ADCH, 1);
- 1fe:	88 81       	ld	r24, Y
- 200:	61 e0       	ldi	r22, 0x01	; 1
- 202:	70 e0       	ldi	r23, 0x00	; 0
- 204:	90 e0       	ldi	r25, 0x00	; 0
- 206:	0e 94 7c 00 	call	0xf8	; 0xf8 <setServoPosition>
-		lastValue=ADCH;
- 20a:	88 81       	ld	r24, Y
- 20c:	90 e0       	ldi	r25, 0x00	; 0
- 20e:	90 93 05 01 	sts	0x0105, r25	; 0x800105 <__data_end+0x1>
- 212:	80 93 04 01 	sts	0x0104, r24	; 0x800104 <__data_end>
-	}
-	//ADCSRA |= 1<<ADSC; // Start Conversions
-	//_delay_ms(1);
+ 236:	1f 92       	push	r1
+ 238:	0f 92       	push	r0
+ 23a:	0f b6       	in	r0, 0x3f	; 63
+ 23c:	0f 92       	push	r0
+ 23e:	11 24       	eor	r1, r1
+ 240:	2f 93       	push	r18
+ 242:	3f 93       	push	r19
+ 244:	4f 93       	push	r20
+ 246:	5f 93       	push	r21
+ 248:	6f 93       	push	r22
+ 24a:	7f 93       	push	r23
+ 24c:	8f 93       	push	r24
+ 24e:	9f 93       	push	r25
+ 250:	af 93       	push	r26
+ 252:	bf 93       	push	r27
+ 254:	ef 93       	push	r30
+ 256:	ff 93       	push	r31
+	//if (lastSliderPosition==ADCH) return;
+	//setServoPosition(256-ADCH);
+	//setServoPosition(256);
+	//for(int i=0; i<value;i++) _delay_us(8);
+	// 256-ADCH-128
+	int value = 128 - ADCH;
+ 258:	90 91 79 00 	lds	r25, 0x0079	; 0x800079 <__TEXT_REGION_LENGTH__+0x7e0079>
+	setServoPosition(value);
+ 25c:	20 e8       	ldi	r18, 0x80	; 128
+ 25e:	30 e0       	ldi	r19, 0x00	; 0
+ 260:	a9 01       	movw	r20, r18
+ 262:	49 1b       	sub	r20, r25
+ 264:	51 09       	sbc	r21, r1
+ 266:	ca 01       	movw	r24, r20
+ 268:	0e 94 f4 00 	call	0x1e8	; 0x1e8 <setServoPosition>
+	//lastSliderPosition=ADCH;
 }
- 216:	ff 91       	pop	r31
- 218:	ef 91       	pop	r30
- 21a:	df 91       	pop	r29
- 21c:	cf 91       	pop	r28
- 21e:	bf 91       	pop	r27
- 220:	af 91       	pop	r26
- 222:	9f 91       	pop	r25
- 224:	8f 91       	pop	r24
- 226:	7f 91       	pop	r23
- 228:	6f 91       	pop	r22
- 22a:	5f 91       	pop	r21
- 22c:	4f 91       	pop	r20
- 22e:	3f 91       	pop	r19
- 230:	2f 91       	pop	r18
- 232:	0f 90       	pop	r0
- 234:	0f be       	out	0x3f, r0	; 63
- 236:	0f 90       	pop	r0
- 238:	1f 90       	pop	r1
- 23a:	18 95       	reti
+ 26c:	ff 91       	pop	r31
+ 26e:	ef 91       	pop	r30
+ 270:	bf 91       	pop	r27
+ 272:	af 91       	pop	r26
+ 274:	9f 91       	pop	r25
+ 276:	8f 91       	pop	r24
+ 278:	7f 91       	pop	r23
+ 27a:	6f 91       	pop	r22
+ 27c:	5f 91       	pop	r21
+ 27e:	4f 91       	pop	r20
+ 280:	3f 91       	pop	r19
+ 282:	2f 91       	pop	r18
+ 284:	0f 90       	pop	r0
+ 286:	0f be       	out	0x3f, r0	; 63
+ 288:	0f 90       	pop	r0
+ 28a:	1f 90       	pop	r1
+ 28c:	18 95       	reti
 
-0000023c <__vector_1>:
+0000028e <__vector_7>:
 
+// Todo: Add comments
+ISR(TIMER2_COMPA_vect){
+ 28e:	1f 92       	push	r1
+ 290:	0f 92       	push	r0
+ 292:	0f b6       	in	r0, 0x3f	; 63
+ 294:	0f 92       	push	r0
+ 296:	11 24       	eor	r1, r1
+ 298:	8f 93       	push	r24
+ 29a:	9f 93       	push	r25
+ 29c:	af 93       	push	r26
+ 29e:	bf 93       	push	r27
+	microsFrontWheel++;
+ 2a0:	80 91 16 01 	lds	r24, 0x0116	; 0x800116 <microsFrontWheel>
+ 2a4:	90 91 17 01 	lds	r25, 0x0117	; 0x800117 <microsFrontWheel+0x1>
+ 2a8:	a0 91 18 01 	lds	r26, 0x0118	; 0x800118 <microsFrontWheel+0x2>
+ 2ac:	b0 91 19 01 	lds	r27, 0x0119	; 0x800119 <microsFrontWheel+0x3>
+ 2b0:	01 96       	adiw	r24, 0x01	; 1
+ 2b2:	a1 1d       	adc	r26, r1
+ 2b4:	b1 1d       	adc	r27, r1
+ 2b6:	80 93 16 01 	sts	0x0116, r24	; 0x800116 <microsFrontWheel>
+ 2ba:	90 93 17 01 	sts	0x0117, r25	; 0x800117 <microsFrontWheel+0x1>
+ 2be:	a0 93 18 01 	sts	0x0118, r26	; 0x800118 <microsFrontWheel+0x2>
+ 2c2:	b0 93 19 01 	sts	0x0119, r27	; 0x800119 <microsFrontWheel+0x3>
+	microsRearWheel++;
+ 2c6:	80 91 12 01 	lds	r24, 0x0112	; 0x800112 <microsRearWheel>
+ 2ca:	90 91 13 01 	lds	r25, 0x0113	; 0x800113 <microsRearWheel+0x1>
+ 2ce:	a0 91 14 01 	lds	r26, 0x0114	; 0x800114 <microsRearWheel+0x2>
+ 2d2:	b0 91 15 01 	lds	r27, 0x0115	; 0x800115 <microsRearWheel+0x3>
+ 2d6:	01 96       	adiw	r24, 0x01	; 1
+ 2d8:	a1 1d       	adc	r26, r1
+ 2da:	b1 1d       	adc	r27, r1
+ 2dc:	80 93 12 01 	sts	0x0112, r24	; 0x800112 <microsRearWheel>
+ 2e0:	90 93 13 01 	sts	0x0113, r25	; 0x800113 <microsRearWheel+0x1>
+ 2e4:	a0 93 14 01 	sts	0x0114, r26	; 0x800114 <microsRearWheel+0x2>
+ 2e8:	b0 93 15 01 	sts	0x0115, r27	; 0x800115 <microsRearWheel+0x3>
+}
+ 2ec:	bf 91       	pop	r27
+ 2ee:	af 91       	pop	r26
+ 2f0:	9f 91       	pop	r25
+ 2f2:	8f 91       	pop	r24
+ 2f4:	0f 90       	pop	r0
+ 2f6:	0f be       	out	0x3f, r0	; 63
+ 2f8:	0f 90       	pop	r0
+ 2fa:	1f 90       	pop	r1
+ 2fc:	18 95       	reti
+
+000002fe <__vector_1>:
+
+// Todo: Add comments
 ISR(INT0_vect){
- 23c:	1f 92       	push	r1
- 23e:	0f 92       	push	r0
- 240:	0f b6       	in	r0, 0x3f	; 63
- 242:	0f 92       	push	r0
- 244:	11 24       	eor	r1, r1
- 246:	4f 93       	push	r20
- 248:	5f 93       	push	r21
- 24a:	6f 93       	push	r22
- 24c:	7f 93       	push	r23
- 24e:	8f 93       	push	r24
- 250:	9f 93       	push	r25
- 252:	af 93       	push	r26
- 254:	bf 93       	push	r27
-	if(PIND & (1<<PORTD2)){
- 256:	4a 9b       	sbis	0x09, 2	; 9
- 258:	11 c0       	rjmp	.+34     	; 0x27c <__vector_1+0x40>
+ 2fe:	1f 92       	push	r1
+ 300:	0f 92       	push	r0
+ 302:	0f b6       	in	r0, 0x3f	; 63
+ 304:	0f 92       	push	r0
+ 306:	11 24       	eor	r1, r1
+ 308:	4f 93       	push	r20
+ 30a:	5f 93       	push	r21
+ 30c:	6f 93       	push	r22
+ 30e:	7f 93       	push	r23
+ 310:	8f 93       	push	r24
+ 312:	9f 93       	push	r25
+ 314:	af 93       	push	r26
+ 316:	bf 93       	push	r27
+	if(PIND & 1<<PORTD2){
+ 318:	4a 9b       	sbis	0x09, 2	; 9
+ 31a:	11 c0       	rjmp	.+34     	; 0x33e <__vector_1+0x40>
 		startFrontWheel = microsFrontWheel;
- 25a:	80 91 12 01 	lds	r24, 0x0112	; 0x800112 <microsFrontWheel>
- 25e:	90 91 13 01 	lds	r25, 0x0113	; 0x800113 <microsFrontWheel+0x1>
- 262:	a0 91 14 01 	lds	r26, 0x0114	; 0x800114 <microsFrontWheel+0x2>
- 266:	b0 91 15 01 	lds	r27, 0x0115	; 0x800115 <microsFrontWheel+0x3>
- 26a:	80 93 0a 01 	sts	0x010A, r24	; 0x80010a <startFrontWheel>
- 26e:	90 93 0b 01 	sts	0x010B, r25	; 0x80010b <startFrontWheel+0x1>
- 272:	a0 93 0c 01 	sts	0x010C, r26	; 0x80010c <startFrontWheel+0x2>
- 276:	b0 93 0d 01 	sts	0x010D, r27	; 0x80010d <startFrontWheel+0x3>
- 27a:	24 c0       	rjmp	.+72     	; 0x2c4 <__vector_1+0x88>
-		}else{
-		delay = microsFrontWheel-startFrontWheel;
- 27c:	80 91 12 01 	lds	r24, 0x0112	; 0x800112 <microsFrontWheel>
- 280:	90 91 13 01 	lds	r25, 0x0113	; 0x800113 <microsFrontWheel+0x1>
- 284:	a0 91 14 01 	lds	r26, 0x0114	; 0x800114 <microsFrontWheel+0x2>
- 288:	b0 91 15 01 	lds	r27, 0x0115	; 0x800115 <microsFrontWheel+0x3>
- 28c:	40 91 0a 01 	lds	r20, 0x010A	; 0x80010a <startFrontWheel>
- 290:	50 91 0b 01 	lds	r21, 0x010B	; 0x80010b <startFrontWheel+0x1>
- 294:	60 91 0c 01 	lds	r22, 0x010C	; 0x80010c <startFrontWheel+0x2>
- 298:	70 91 0d 01 	lds	r23, 0x010D	; 0x80010d <startFrontWheel+0x3>
- 29c:	84 1b       	sub	r24, r20
- 29e:	95 0b       	sbc	r25, r21
- 2a0:	a6 0b       	sbc	r26, r22
- 2a2:	b7 0b       	sbc	r27, r23
- 2a4:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
- 2a8:	90 93 01 01 	sts	0x0101, r25	; 0x800101 <__data_start+0x1>
- 2ac:	a0 93 02 01 	sts	0x0102, r26	; 0x800102 <__data_start+0x2>
- 2b0:	b0 93 03 01 	sts	0x0103, r27	; 0x800103 <__data_start+0x3>
+ 31c:	80 91 16 01 	lds	r24, 0x0116	; 0x800116 <microsFrontWheel>
+ 320:	90 91 17 01 	lds	r25, 0x0117	; 0x800117 <microsFrontWheel+0x1>
+ 324:	a0 91 18 01 	lds	r26, 0x0118	; 0x800118 <microsFrontWheel+0x2>
+ 328:	b0 91 19 01 	lds	r27, 0x0119	; 0x800119 <microsFrontWheel+0x3>
+ 32c:	80 93 0e 01 	sts	0x010E, r24	; 0x80010e <startFrontWheel>
+ 330:	90 93 0f 01 	sts	0x010F, r25	; 0x80010f <startFrontWheel+0x1>
+ 334:	a0 93 10 01 	sts	0x0110, r26	; 0x800110 <startFrontWheel+0x2>
+ 338:	b0 93 11 01 	sts	0x0111, r27	; 0x800111 <startFrontWheel+0x3>
+ 33c:	24 c0       	rjmp	.+72     	; 0x386 <__vector_1+0x88>
+	}else{
+		frontWheelPeriod = microsFrontWheel-startFrontWheel;
+ 33e:	80 91 16 01 	lds	r24, 0x0116	; 0x800116 <microsFrontWheel>
+ 342:	90 91 17 01 	lds	r25, 0x0117	; 0x800117 <microsFrontWheel+0x1>
+ 346:	a0 91 18 01 	lds	r26, 0x0118	; 0x800118 <microsFrontWheel+0x2>
+ 34a:	b0 91 19 01 	lds	r27, 0x0119	; 0x800119 <microsFrontWheel+0x3>
+ 34e:	40 91 0e 01 	lds	r20, 0x010E	; 0x80010e <startFrontWheel>
+ 352:	50 91 0f 01 	lds	r21, 0x010F	; 0x80010f <startFrontWheel+0x1>
+ 356:	60 91 10 01 	lds	r22, 0x0110	; 0x800110 <startFrontWheel+0x2>
+ 35a:	70 91 11 01 	lds	r23, 0x0111	; 0x800111 <startFrontWheel+0x3>
+ 35e:	84 1b       	sub	r24, r20
+ 360:	95 0b       	sbc	r25, r21
+ 362:	a6 0b       	sbc	r26, r22
+ 364:	b7 0b       	sbc	r27, r23
+ 366:	80 93 04 01 	sts	0x0104, r24	; 0x800104 <frontWheelPeriod>
+ 36a:	90 93 05 01 	sts	0x0105, r25	; 0x800105 <frontWheelPeriod+0x1>
+ 36e:	a0 93 06 01 	sts	0x0106, r26	; 0x800106 <frontWheelPeriod+0x2>
+ 372:	b0 93 07 01 	sts	0x0107, r27	; 0x800107 <frontWheelPeriod+0x3>
 		microsFrontWheel=0;
- 2b4:	10 92 12 01 	sts	0x0112, r1	; 0x800112 <microsFrontWheel>
- 2b8:	10 92 13 01 	sts	0x0113, r1	; 0x800113 <microsFrontWheel+0x1>
- 2bc:	10 92 14 01 	sts	0x0114, r1	; 0x800114 <microsFrontWheel+0x2>
- 2c0:	10 92 15 01 	sts	0x0115, r1	; 0x800115 <microsFrontWheel+0x3>
+ 376:	10 92 16 01 	sts	0x0116, r1	; 0x800116 <microsFrontWheel>
+ 37a:	10 92 17 01 	sts	0x0117, r1	; 0x800117 <microsFrontWheel+0x1>
+ 37e:	10 92 18 01 	sts	0x0118, r1	; 0x800118 <microsFrontWheel+0x2>
+ 382:	10 92 19 01 	sts	0x0119, r1	; 0x800119 <microsFrontWheel+0x3>
 	}
 }
- 2c4:	bf 91       	pop	r27
- 2c6:	af 91       	pop	r26
- 2c8:	9f 91       	pop	r25
- 2ca:	8f 91       	pop	r24
- 2cc:	7f 91       	pop	r23
- 2ce:	6f 91       	pop	r22
- 2d0:	5f 91       	pop	r21
- 2d2:	4f 91       	pop	r20
- 2d4:	0f 90       	pop	r0
- 2d6:	0f be       	out	0x3f, r0	; 63
- 2d8:	0f 90       	pop	r0
- 2da:	1f 90       	pop	r1
- 2dc:	18 95       	reti
+ 386:	bf 91       	pop	r27
+ 388:	af 91       	pop	r26
+ 38a:	9f 91       	pop	r25
+ 38c:	8f 91       	pop	r24
+ 38e:	7f 91       	pop	r23
+ 390:	6f 91       	pop	r22
+ 392:	5f 91       	pop	r21
+ 394:	4f 91       	pop	r20
+ 396:	0f 90       	pop	r0
+ 398:	0f be       	out	0x3f, r0	; 63
+ 39a:	0f 90       	pop	r0
+ 39c:	1f 90       	pop	r1
+ 39e:	18 95       	reti
 
-000002de <__vector_2>:
+000003a0 <__vector_2>:
 
+// Todo: Add comments
 ISR(INT1_vect){
- 2de:	1f 92       	push	r1
- 2e0:	0f 92       	push	r0
- 2e2:	0f b6       	in	r0, 0x3f	; 63
- 2e4:	0f 92       	push	r0
- 2e6:	11 24       	eor	r1, r1
- 2e8:	4f 93       	push	r20
- 2ea:	5f 93       	push	r21
- 2ec:	6f 93       	push	r22
- 2ee:	7f 93       	push	r23
- 2f0:	8f 93       	push	r24
- 2f2:	9f 93       	push	r25
- 2f4:	af 93       	push	r26
- 2f6:	bf 93       	push	r27
-	if(PIND & (1<<PORTD3)){
- 2f8:	4b 9b       	sbis	0x09, 3	; 9
- 2fa:	11 c0       	rjmp	.+34     	; 0x31e <__vector_2+0x40>
+ 3a0:	1f 92       	push	r1
+ 3a2:	0f 92       	push	r0
+ 3a4:	0f b6       	in	r0, 0x3f	; 63
+ 3a6:	0f 92       	push	r0
+ 3a8:	11 24       	eor	r1, r1
+ 3aa:	4f 93       	push	r20
+ 3ac:	5f 93       	push	r21
+ 3ae:	6f 93       	push	r22
+ 3b0:	7f 93       	push	r23
+ 3b2:	8f 93       	push	r24
+ 3b4:	9f 93       	push	r25
+ 3b6:	af 93       	push	r26
+ 3b8:	bf 93       	push	r27
+	if(PIND & 1<<PORTD3){
+ 3ba:	4b 9b       	sbis	0x09, 3	; 9
+ 3bc:	11 c0       	rjmp	.+34     	; 0x3e0 <__vector_2+0x40>
 		startRearWheel = microsRearWheel;
- 2fc:	80 91 0e 01 	lds	r24, 0x010E	; 0x80010e <microsRearWheel>
- 300:	90 91 0f 01 	lds	r25, 0x010F	; 0x80010f <microsRearWheel+0x1>
- 304:	a0 91 10 01 	lds	r26, 0x0110	; 0x800110 <microsRearWheel+0x2>
- 308:	b0 91 11 01 	lds	r27, 0x0111	; 0x800111 <microsRearWheel+0x3>
- 30c:	80 93 06 01 	sts	0x0106, r24	; 0x800106 <startRearWheel>
- 310:	90 93 07 01 	sts	0x0107, r25	; 0x800107 <startRearWheel+0x1>
- 314:	a0 93 08 01 	sts	0x0108, r26	; 0x800108 <startRearWheel+0x2>
- 318:	b0 93 09 01 	sts	0x0109, r27	; 0x800109 <startRearWheel+0x3>
- 31c:	24 c0       	rjmp	.+72     	; 0x366 <__vector_2+0x88>
-		}else{
-		delay = microsRearWheel-startRearWheel;
- 31e:	80 91 0e 01 	lds	r24, 0x010E	; 0x80010e <microsRearWheel>
- 322:	90 91 0f 01 	lds	r25, 0x010F	; 0x80010f <microsRearWheel+0x1>
- 326:	a0 91 10 01 	lds	r26, 0x0110	; 0x800110 <microsRearWheel+0x2>
- 32a:	b0 91 11 01 	lds	r27, 0x0111	; 0x800111 <microsRearWheel+0x3>
- 32e:	40 91 06 01 	lds	r20, 0x0106	; 0x800106 <startRearWheel>
- 332:	50 91 07 01 	lds	r21, 0x0107	; 0x800107 <startRearWheel+0x1>
- 336:	60 91 08 01 	lds	r22, 0x0108	; 0x800108 <startRearWheel+0x2>
- 33a:	70 91 09 01 	lds	r23, 0x0109	; 0x800109 <startRearWheel+0x3>
- 33e:	84 1b       	sub	r24, r20
- 340:	95 0b       	sbc	r25, r21
- 342:	a6 0b       	sbc	r26, r22
- 344:	b7 0b       	sbc	r27, r23
- 346:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
- 34a:	90 93 01 01 	sts	0x0101, r25	; 0x800101 <__data_start+0x1>
- 34e:	a0 93 02 01 	sts	0x0102, r26	; 0x800102 <__data_start+0x2>
- 352:	b0 93 03 01 	sts	0x0103, r27	; 0x800103 <__data_start+0x3>
+ 3be:	80 91 12 01 	lds	r24, 0x0112	; 0x800112 <microsRearWheel>
+ 3c2:	90 91 13 01 	lds	r25, 0x0113	; 0x800113 <microsRearWheel+0x1>
+ 3c6:	a0 91 14 01 	lds	r26, 0x0114	; 0x800114 <microsRearWheel+0x2>
+ 3ca:	b0 91 15 01 	lds	r27, 0x0115	; 0x800115 <microsRearWheel+0x3>
+ 3ce:	80 93 0a 01 	sts	0x010A, r24	; 0x80010a <startRearWheel>
+ 3d2:	90 93 0b 01 	sts	0x010B, r25	; 0x80010b <startRearWheel+0x1>
+ 3d6:	a0 93 0c 01 	sts	0x010C, r26	; 0x80010c <startRearWheel+0x2>
+ 3da:	b0 93 0d 01 	sts	0x010D, r27	; 0x80010d <startRearWheel+0x3>
+ 3de:	24 c0       	rjmp	.+72     	; 0x428 <__LOCK_REGION_LENGTH__+0x28>
+	}else{
+		rearWheelPeriod = microsRearWheel-startRearWheel;
+ 3e0:	80 91 12 01 	lds	r24, 0x0112	; 0x800112 <microsRearWheel>
+ 3e4:	90 91 13 01 	lds	r25, 0x0113	; 0x800113 <microsRearWheel+0x1>
+ 3e8:	a0 91 14 01 	lds	r26, 0x0114	; 0x800114 <microsRearWheel+0x2>
+ 3ec:	b0 91 15 01 	lds	r27, 0x0115	; 0x800115 <microsRearWheel+0x3>
+ 3f0:	40 91 0a 01 	lds	r20, 0x010A	; 0x80010a <startRearWheel>
+ 3f4:	50 91 0b 01 	lds	r21, 0x010B	; 0x80010b <startRearWheel+0x1>
+ 3f8:	60 91 0c 01 	lds	r22, 0x010C	; 0x80010c <startRearWheel+0x2>
+ 3fc:	70 91 0d 01 	lds	r23, 0x010D	; 0x80010d <startRearWheel+0x3>
+ 400:	84 1b       	sub	r24, r20
+ 402:	95 0b       	sbc	r25, r21
+ 404:	a6 0b       	sbc	r26, r22
+ 406:	b7 0b       	sbc	r27, r23
+ 408:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
+ 40c:	90 93 01 01 	sts	0x0101, r25	; 0x800101 <__data_start+0x1>
+ 410:	a0 93 02 01 	sts	0x0102, r26	; 0x800102 <__data_start+0x2>
+ 414:	b0 93 03 01 	sts	0x0103, r27	; 0x800103 <__data_start+0x3>
 		microsRearWheel=0;
- 356:	10 92 0e 01 	sts	0x010E, r1	; 0x80010e <microsRearWheel>
- 35a:	10 92 0f 01 	sts	0x010F, r1	; 0x80010f <microsRearWheel+0x1>
- 35e:	10 92 10 01 	sts	0x0110, r1	; 0x800110 <microsRearWheel+0x2>
- 362:	10 92 11 01 	sts	0x0111, r1	; 0x800111 <microsRearWheel+0x3>
+ 418:	10 92 12 01 	sts	0x0112, r1	; 0x800112 <microsRearWheel>
+ 41c:	10 92 13 01 	sts	0x0113, r1	; 0x800113 <microsRearWheel+0x1>
+ 420:	10 92 14 01 	sts	0x0114, r1	; 0x800114 <microsRearWheel+0x2>
+ 424:	10 92 15 01 	sts	0x0115, r1	; 0x800115 <microsRearWheel+0x3>
 	}
 }
- 366:	bf 91       	pop	r27
- 368:	af 91       	pop	r26
- 36a:	9f 91       	pop	r25
- 36c:	8f 91       	pop	r24
- 36e:	7f 91       	pop	r23
- 370:	6f 91       	pop	r22
- 372:	5f 91       	pop	r21
- 374:	4f 91       	pop	r20
- 376:	0f 90       	pop	r0
- 378:	0f be       	out	0x3f, r0	; 63
- 37a:	0f 90       	pop	r0
- 37c:	1f 90       	pop	r1
- 37e:	18 95       	reti
+ 428:	bf 91       	pop	r27
+ 42a:	af 91       	pop	r26
+ 42c:	9f 91       	pop	r25
+ 42e:	8f 91       	pop	r24
+ 430:	7f 91       	pop	r23
+ 432:	6f 91       	pop	r22
+ 434:	5f 91       	pop	r21
+ 436:	4f 91       	pop	r20
+ 438:	0f 90       	pop	r0
+ 43a:	0f be       	out	0x3f, r0	; 63
+ 43c:	0f 90       	pop	r0
+ 43e:	1f 90       	pop	r1
+ 440:	18 95       	reti
 
-00000380 <main>:
+00000442 <main>:
 
 int main(void){
-	//DDRC |= 1<<DDC5; // Set PC5 as Output
 	ADCinit();
- 380:	0e 94 53 00 	call	0xa6	; 0xa6 <ADCinit>
+ 442:	0e 94 53 00 	call	0xa6	; 0xa6 <ADCinit>
 	MicrosTimerInit();
- 384:	0e 94 6b 00 	call	0xd6	; 0xd6 <MicrosTimerInit>
-	PhotointerruptersInit();
- 388:	0e 94 76 00 	call	0xec	; 0xec <PhotointerruptersInit>
-	microsRearWheel++;
+ 446:	0e 94 6b 00 	call	0xd6	; 0xd6 <MicrosTimerInit>
+	PhotoInterruptersInit();
+ 44a:	0e 94 76 00 	call	0xec	; 0xec <PhotoInterruptersInit>
+	EICRA = 0<<ISC11 | 1<<ISC10 | 0<<ISC01 | 1<<ISC00; // Trigger INT0 and INT1 on Change
 }
 
 // Initializes PWM signal on PB1 & PB2 for front servo & back servo
 void ServoPWMinit(){
-	DDRB = 1<<DDB1 | 1<<DDB2; // Set PB1 & PB2 as outputs for OC1A and OC1B respectively
- 38c:	86 e0       	ldi	r24, 0x06	; 6
- 38e:	84 b9       	out	0x04, r24	; 4
-	//DDRC |= 1<<DDC5; // Set PC5 as Output
+	DDRB = 1<<DDB1 | 1<<DDB2; // Set PB1 & PB2 as outputs
+ 44e:	86 e0       	ldi	r24, 0x06	; 6
+ 450:	84 b9       	out	0x04, r24	; 4
+int main(void){
 	ADCinit();
 	MicrosTimerInit();
-	PhotointerruptersInit();
+	PhotoInterruptersInit();
 	ServoPWMinit();
 	sei();
- 390:	78 94       	sei
- 392:	ff cf       	rjmp	.-2      	; 0x392 <main+0x12>
+ 452:	78 94       	sei
+ 454:	ff cf       	rjmp	.-2      	; 0x454 <main+0x12>
 
-00000394 <_exit>:
- 394:	f8 94       	cli
+00000456 <_exit>:
+ 456:	f8 94       	cli
 
-00000396 <__stop_program>:
- 396:	ff cf       	rjmp	.-2      	; 0x396 <__stop_program>
+00000458 <__stop_program>:
+ 458:	ff cf       	rjmp	.-2      	; 0x458 <__stop_program>
