@@ -195,7 +195,7 @@ int main(void){
 	MicrosTimerInit();
 	PhotoInterruptersInit();
 	ServoPWMinit();
-	//WDTInit();
+	WDTInit();
 	sei();
 	while(1);
 }
