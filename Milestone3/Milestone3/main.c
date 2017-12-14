@@ -23,20 +23,42 @@
 
 // ------------------------------------------ Calibration ------------------------------------------------
 #define F_CPU 16000000UL	// 16 MHz Clock Frequency
-#define DIFFERENCE_THRESHOLD 50
+//#define DIFFERENCE_THRESHOLD 1600000
+#define MAX_PERIOD 10000
 // -------------------------------------------------------------------------------------------------------
 
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
+#include <avr/wdt.h>
 
 volatile uint32_t microsFrontWheel=0;
 volatile uint32_t microsRearWheel=0;
 uint32_t startFrontWheel=0;
 uint32_t startRearWheel=0;
-uint32_t frontWheelPeriod = -1;
-uint32_t rearWheelPeriod = -1;
+uint32_t frontWheelPeriod = 0;
+uint32_t rearWheelPeriod = 0;
+int frontWheelUnreadPulsesNumber = 0;
+int rearWheelUnreadPulsesNumber = 0;
 int checkWheelsFrequenciesReturnValue=0;
+
+// Initializes the WatchDog Timer to reset the system every 16ms if not cleared
+void WDTInit(){
+	// Clear the reset flag, the WDRF bit (bit 3) of MCUSR.
+	MCUSR = MCUSR & 0xF7;
+	// Set the WDCE (Watchdog Change Enable) bit (bit 4) and the WDE (Watchdog System 
+	// Reset Enable) bit (bit 3) of WDTCSR. The WDCE bit must be set in order to
+	// change WDE or the watchdog prescalers. Setting the WDCE bit will allow updates to the 
+	// prescalers and WDE for 4 clock cycles then it will be reset by hardware.
+	WDTCSR = WDTCSR | 0x18;
+
+	// Set the watchdog timeout prescaler value to 2K which will yield a time-out interval of about 16ms.
+	WDTCSR = 0;
+
+	// Enable the watchdog timer interrupt.
+	WDTCSR = WDTCSR | 0x40;
+	MCUSR = MCUSR & 0xF7;
+}
 
 // Initializes the ADC component to convert the ACD0 input with a 128 prescaler and auto conversion
  void ADCinit(){
@@ -51,10 +73,12 @@ int checkWheelsFrequenciesReturnValue=0;
 
 // Initializes Timer/Counter2 in CTC mode to trigger an interrupt every 160 clock ticks or 10 us
 void MicrosTimerInit(){
-	TCCR2A = 1<<WGM21; // Set Timer 2 to CTC mode, TOP = OCR2A, Immediate update of OCR2A, TOV Flag set on MAX, Normal port operation, OC2A disconnected
-	TCCR2B = 1 << CS21; // Set prescaler to clk/8
-	TIMSK2 = 1 << OCIE2A; // Enable CTC interrupt
-	OCR2A = 20; // Set TOP value to 20
+	// Set Timer 2 to CTC mode, TOP = OCR2A, Immediate update of OCR2A, TOV Flag set on MAX, 
+	// Normal port operation, OC2A disconnected
+	TCCR0A = 1<<WGM01;
+	TCCR0B = 1 << CS01; // Set prescaler to clk/8
+	TIMSK0 = 1 << OCIE0A; // Enable CTC interrupt
+	OCR0A = 20; // Set TOP value to 20
 }
 
 // Initializes the front and rear Photo-Interrupter Sensors on INT0 & INT1 respectively to trigger 
@@ -67,7 +91,9 @@ void PhotoInterruptersInit(){
 // Initializes PWM signal on PB1 & PB2 for front & back servo respectively
 void ServoPWMinit(){
 	DDRB = 1<<DDB1 | 1<<DDB2; // Set PB1 & PB2 as outputs for OC1A and OC1B respectively
-	TCCR1A=1<<COM1A1 | 1<<COM1B1 | 1<<WGM11; //Non-Inverting mode - Set OC1A/OC1B on compare match when up-counting. Clear OC1A/OC1B on compare match when down counting.
+	// Non-Inverting mode - Set OC1A/OC1B on compare match when up-counting. 
+	// Clear OC1A/OC1B on compare match when down counting.
+	TCCR1A=1<<COM1A1 | 1<<COM1B1 | 1<<WGM11;
 	TCCR1B=1<<WGM13 | 1<<WGM12; // Fast PWM
 	TCCR1B|=1<<CS11; // Set prescaler to clk/8
 	ICR1=40000;	// PWM Frequency = 50Hz (Period = 20ms Standard).
@@ -80,14 +106,33 @@ void checkWheelsFrequencies(){
 	// If there are no new pulse periods measurements return the last decision
 	// Considers the state when the bike is stopped and no pulses are sent from the servos
 	// but still want to brake
-	if (frontWheelPeriod == -1 || rearWheelPeriod == -1) return;
+	if(microsFrontWheel > MAX_PERIOD && microsRearWheel > MAX_PERIOD){ // Stopped
+		checkWheelsFrequenciesReturnValue = 0;
+		return;
+	}else if(microsFrontWheel > MAX_PERIOD && rearWheelUnreadPulsesNumber>=5){ // Rear Wheel moved
+		microsFrontWheel=0;
+		checkWheelsFrequenciesReturnValue = 1;
+		return;
+	}else if (microsRearWheel > MAX_PERIOD && frontWheelUnreadPulsesNumber>=5){ // Front Wheel moved
+		microsRearWheel=0;
+		checkWheelsFrequenciesReturnValue = -1;
+		return;
+	}
+	//if (frontWheelPeriod == 0 || rearWheelPeriod == 0) return;
+	
+	// Check if blocked (one wheel sends pulses and the other is blocked so no pulses are send)
+	if ((frontWheelUnreadPulsesNumber==0 || rearWheelUnreadPulsesNumber==0) && 
+		(frontWheelUnreadPulsesNumber<2 && rearWheelUnreadPulsesNumber<2)) return;
 	int32_t difference = frontWheelPeriod-rearWheelPeriod;
-	// Reinitialize for the new measurements
-	frontWheelPeriod=-1;
-	rearWheelPeriod=-1;
-	if(difference>DIFFERENCE_THRESHOLD) checkWheelsFrequenciesReturnValue = 1;
-	else if (difference<-DIFFERENCE_THRESHOLD) checkWheelsFrequenciesReturnValue = -1;
+	int32_t minPeriod = (frontWheelPeriod<rearWheelPeriod?frontWheelPeriod:rearWheelPeriod)<<4;
+	if(difference>minPeriod) checkWheelsFrequenciesReturnValue = 1;
+	else if (difference<-minPeriod) checkWheelsFrequenciesReturnValue = -1;
 	else checkWheelsFrequenciesReturnValue = 0;
+	// Reinitialize for the new measurements
+	frontWheelPeriod=0;
+	rearWheelPeriod=0;
+	frontWheelUnreadPulsesNumber=0;
+	rearWheelUnreadPulsesNumber=0;
 }
 
 // Sets the Servo PWM duty cycle to PB1 & PB2 for controlling the front & rear servo
@@ -106,10 +151,11 @@ void setServoPosition(int value){
 ISR (ADC_vect){
 	// Slider value inversion and offsetting (256 Slider values - ADCH - 128 values offset = 128 - ADCH)
 	setServoPosition(128 - ADCH); // Set servos' positions equally to the sliders inverted position
+	//wdt_reset(); // Reset watchdog timers
 }
 
 // Counting clock ticks for each wheel's Photo-Interrupter Sensor
-ISR(TIMER2_COMPA_vect){
+ISR(TIMER0_COMPA_vect){
 	microsFrontWheel++;
 	microsRearWheel++;
 }
@@ -124,6 +170,7 @@ ISR(INT0_vect){
 		startFrontWheel = microsFrontWheel;
 	}else{ 
 		frontWheelPeriod = microsFrontWheel-startFrontWheel;
+		frontWheelUnreadPulsesNumber++;
 		microsFrontWheel=0; // Restart time counting
 	}
 }
@@ -138,6 +185,7 @@ ISR(INT1_vect){
 		startRearWheel = microsRearWheel;
 	}else{
 		rearWheelPeriod = microsRearWheel-startRearWheel;
+		rearWheelUnreadPulsesNumber++;
 		microsRearWheel=0; // Restart time counting
 	}
 }
@@ -147,6 +195,7 @@ int main(void){
 	MicrosTimerInit();
 	PhotoInterruptersInit();
 	ServoPWMinit();
+	//WDTInit();
 	sei();
 	while(1);
 }
